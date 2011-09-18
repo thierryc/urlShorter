@@ -30,9 +30,11 @@ Format options are: json, xml, html, and txt
 import wsgiref.handlers
 import re, os, logging
 from google.appengine.ext import webapp
+from google.appengine.ext.webapp import util
 from google.appengine.ext import db
 from urly import Urly
 from view import MainView
+
 
 class MainHandler(webapp.RequestHandler):
     """All non-static requests go through this handler.
@@ -74,11 +76,13 @@ class MainHandler(webapp.RequestHandler):
             else:
                 self.error(404)
 
+
 def main():
-    application = webapp.WSGIApplication([
-        ('/([a-zA-Z0-9]{1,6})?(.xml|.json|.html|.txt)?', MainHandler)
-    ], debug=True)
-    wsgiref.handlers.CGIHandler().run(application)
+    application = webapp.WSGIApplication([('/([a-zA-Z0-9]{1,6})?(.xml|.json|.html|.txt)?', MainHandler)],
+                                         debug=True)
+    util.run_wsgi_app(application)
+
+
 
 if __name__ == '__main__':
     main()

@@ -13,13 +13,13 @@ import cgi
 import logging
 
 class Urly(db.Model):
-    """Our one-and-only model"""  
+    """Our one-and-only model""" 
     href = db.LinkProperty(required=True)
     created_at = db.DateTimeProperty(auto_now_add=True)
 
     KEY_BASE = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     BASE = 62
-
+    
     def code(self):
         """Return our code, our base-62 encoded id"""
         if not self.is_saved():
@@ -31,7 +31,7 @@ class Urly(db.Model):
             s.append(Urly.KEY_BASE[c])
         s.reverse()
         return "".join(s)
-        
+    
     def to_json(self):
         """JSON is so simple that we won't worry about a template at this point"""
         return "{\"code\":\"%s\",\"href\":\"%s\"}\n" % (self.code(), self.href);
@@ -43,7 +43,7 @@ class Urly(db.Model):
         return msg
 
     def to_text(self):
-        return "http://ur.ly/%s" % self.code()
+        return "%s" % self.code()
 
     def save_in_cache(self):
         """We don't really care if this fails"""

@@ -32,9 +32,11 @@ class MainView():
             elif (format == '.xml'):
                 render_raw(handler, "application/xml", urly.to_xml())
             elif (format == '.txt'):
-                render_raw(handler, "text/plain", urly.to_text())
+                render_raw(handler, "text/plain", '%s/%s' % (handler.request.host_url, urly.to_text()))
             else:
-                render_main(handler, { 'urly': urly, 'title': title })
+                import urlparse
+                twitterId = '5nFsdQdkcXpC9eMjvZEsYg'
+                render_main(handler, { 'urly': urly, 'title': title, 'hostUrl': urlparse.urlparse(handler.request.host_url).netloc, 'twitter': twitterId })
         elif (status == 400):
             handler.error(status)
             if (format != '.json') and (format != '.xml'): 
