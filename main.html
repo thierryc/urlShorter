@@ -23,7 +23,7 @@
 <span style="float: right">
   <a href="http://code.google.com/appengine/"><img border="0" src="http://code.google.com/appengine/images/appengine-noborder-120x30.gif" /></a>
 </span>
-<a href="/"><img border="0" style="padding-top: 3px;" src="static/urly.gif" alt=" - dang short urls" /></a>
+<a href="/">{{ hostUrl }} - Dand Short Urls</a>
 
 {% if error_404 or urly or error_href %}
 <div style="margin-top: 5px; margin-bottom: 15px;">
@@ -32,7 +32,7 @@
   {% if urly %}
   {{ urly.href }} is now dang short, and <b>its already on your clipboard</b>.<br />
   <input id="href" name="href" type="text" style="margin-top: 5px; padding: 3px; width: 600px; border: 1px solid #cccccc;" value="http://{{ hostUrl }}/{{ urly.code }}" />
-  <script type="text/javascript" language="javascript">window.onload = copy("http://{{ hostUrl }}/{{ urly.code }}");</script>
+  <!-- <script type="text/javascript" language="javascript">window.onload = copy("http://{{ hostUrl }}/{{ urly.code }}");</script> -->
   <script type="text/javascript" language="javascript">window.onload = focus("href");</script>
   <div style="margin-top:15px">
     Tweet about your {{ hostUrl }}:
