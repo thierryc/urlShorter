@@ -9,6 +9,7 @@
 
 import os
 from google.appengine.ext.webapp import template
+import urlparse
 
 class MainView():
     """Helper method for our one-and-only template. All display goes through here"""
@@ -34,18 +35,17 @@ class MainView():
             elif (format == '.txt'):
                 render_raw(handler, "text/plain", '%s/%s' % (handler.request.host_url, urly.to_text()))
             else:
-                import urlparse
                 twitterId = '5nFsdQdkcXpC9eMjvZEsYg'
                 render_main(handler, { 'urly': urly, 'title': title, 'hostUrl': urlparse.urlparse(handler.request.host_url).netloc, 'twitter': twitterId })
         elif (status == 400):
             handler.error(status)
             if (format != '.json') and (format != '.xml'): 
-                vals = { 'error_href': True, 'default_href': href }
+                vals = { 'error_href': True, 'default_href': href, 'hostUrl': urlparse.urlparse(handler.request.host_url).netloc }
                 render_main(handler, vals)
         elif (status == 404):
             handler.error(404)
             if (format != '.json') and (format != '.xml'): 
-                vals = { 'error_404': True }
+                vals = { 'error_404': True, 'hostUrl': urlparse.urlparse(handler.request.host_url).netloc }
                 render_main(handler, vals)
         else:
-            render_main(handler)
+            render_main(handler, { 'hostUrl': urlparse.urlparse(handler.request.host_url).netloc })
